@@ -17,236 +17,293 @@ const QUICK_PROMPTS = [
   { label: 'vs manual process', icon: '🔄', prompt: 'Prospect says their team looks things up manually. How do I make the case for MediRegs?' },
 ]
 
-const S = {
-  page: {
-    minHeight: '100vh',
-    background: '#0f0f0f',
-    color: '#e8e6e0',
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '780px',
-    margin: '0 auto',
-    padding: '0 0 40px',
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '18px 24px 16px',
-    borderBottom: '1px solid #1e1e1e',
-  },
-  headerLeft: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-  avatar: {
-    width: '34px',
-    height: '34px',
-    borderRadius: '8px',
-    background: '#1a2a1a',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '18px',
-  },
-  title: {
-    fontSize: '15px',
-    fontWeight: 600,
-    color: '#e8e6e0',
-    margin: 0,
-    lineHeight: 1.2,
-  },
-  subtitle: {
-    fontSize: '12px',
-    color: '#5a5a52',
-    margin: 0,
-  },
-  statusDot: (active) => ({
-    width: '7px',
-    height: '7px',
-    borderRadius: '50%',
-    background: active ? '#4a7c4a' : '#7c7c4a',
-    display: 'inline-block',
-    marginRight: '6px',
-  }),
-  statusText: {
-    fontSize: '12px',
-    color: '#5a5a52',
-  },
-  clearBtn: {
-    fontSize: '12px',
-    color: '#5a5a52',
-    background: 'none',
-    border: '1px solid #222',
-    borderRadius: '5px',
-    padding: '3px 10px',
-    cursor: 'pointer',
-    marginLeft: '12px',
-  },
-  quickGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(168px, 1fr))',
-    gap: '6px',
-    padding: '20px 24px 0',
-  },
-  quickBtn: {
-    background: '#161616',
-    border: '1px solid #1e1e1e',
-    borderRadius: '8px',
-    padding: '9px 11px',
-    cursor: 'pointer',
-    textAlign: 'left',
-    fontSize: '13px',
-    color: '#9a9890',
-    lineHeight: 1.35,
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '7px',
-    transition: 'border-color 0.12s, color 0.12s',
-  },
-  quickLabel: {
-    fontSize: '11px',
-    color: '#3a3a32',
-    textTransform: 'uppercase',
-    letterSpacing: '0.06em',
-    padding: '20px 24px 10px',
-  },
-  messages: {
-    flex: 1,
-    padding: '20px 24px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '14px',
-  },
-  userBubble: {
-    alignSelf: 'flex-end',
-    background: '#1a1f1a',
-    border: '1px solid #253025',
-    borderRadius: '10px 10px 2px 10px',
-    padding: '9px 13px',
-    maxWidth: '72%',
-    fontSize: '14px',
-    lineHeight: 1.5,
-    color: '#c8c6c0',
-  },
-  assistantBubble: {
-    background: '#141414',
-    border: '1px solid #1e1e1e',
-    borderRadius: '2px 10px 10px 10px',
-    padding: '14px 16px',
-  },
-  assistantHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '7px',
-    marginBottom: '10px',
-  },
-  assistantName: {
-    fontSize: '12px',
-    color: '#5a5a52',
-    fontWeight: 500,
-  },
-  answerText: {
-    fontSize: '15px',
-    lineHeight: 1.65,
-    color: '#d8d6d0',
-    margin: 0,
-  },
-  bulletRow: {
-    display: 'flex',
-    gap: '8px',
-    margin: '2px 0',
-    fontSize: '15px',
-    lineHeight: 1.6,
-    color: '#d8d6d0',
-  },
-  bulletAccent: {
-    color: '#4a7c4a',
-    flexShrink: 0,
-    marginTop: '2px',
-  },
-  followBtns: {
-    display: 'flex',
-    gap: '6px',
-    flexWrap: 'wrap',
-    marginTop: '12px',
-  },
-  followBtn: {
-    fontSize: '12px',
-    color: '#5a5a52',
-    background: 'none',
-    border: '1px solid #222',
-    borderRadius: '5px',
-    padding: '3px 9px',
-    cursor: 'pointer',
-  },
-  typingBubble: {
-    background: '#141414',
-    border: '1px solid #1e1e1e',
-    borderRadius: '2px 10px 10px 10px',
-    padding: '14px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  },
-  quickStrip: {
-    display: 'flex',
-    gap: '6px',
-    flexWrap: 'wrap',
-    padding: '0 24px 12px',
-  },
-  quickPill: {
-    background: '#141414',
-    border: '1px solid #1e1e1e',
-    borderRadius: '20px',
-    padding: '4px 11px',
-    cursor: 'pointer',
-    fontSize: '12px',
-    color: '#5a5a52',
-    whiteSpace: 'nowrap',
-  },
-  inputRow: {
-    padding: '0 24px',
-    display: 'flex',
-    gap: '8px',
-    alignItems: 'flex-end',
-  },
-  textarea: {
-    flex: 1,
-    background: '#141414',
-    border: '1px solid #222',
-    borderRadius: '8px',
-    padding: '10px 13px',
-    fontSize: '14px',
-    lineHeight: 1.5,
-    color: '#e8e6e0',
-    fontFamily: 'inherit',
-    resize: 'none',
-    outline: 'none',
-  },
-  sendBtn: (active) => ({
-    padding: '10px 18px',
-    borderRadius: '8px',
-    background: active ? '#2a4a2a' : '#161616',
-    border: '1px solid ' + (active ? '#3a6a3a' : '#222'),
-    color: active ? '#a8d4a8' : '#3a3a32',
-    fontSize: '14px',
-    fontWeight: 500,
-    cursor: active ? 'pointer' : 'default',
-    height: '60px',
-    flexShrink: 0,
-    transition: 'all 0.12s',
-  }),
-  hint: {
-    fontSize: '11px',
-    color: '#3a3a32',
-    textAlign: 'right',
-    padding: '5px 24px 0',
-  },
+const DARK = {
+  page: '#0f0f0f',
+  surface: '#141414',
+  surfaceAlt: '#161616',
+  border: '#1e1e1e',
+  borderStrong: '#2a2a22',
+  text: '#e8e6e0',
+  textMuted: '#9a9890',
+  textDim: '#5a5a52',
+  textFaint: '#3a3a32',
+  userBubbleBg: '#1a1f1a',
+  userBubbleBorder: '#253025',
+  accent: '#4a7c4a',
+  accentBorder: '#3a6a3a',
+  accentText: '#a8d4a8',
+  accentBg: '#2a4a2a',
+  strongText: '#e8e6e0',
 }
 
-function renderAnswer(text, setQuery, inputRef) {
+const LIGHT = {
+  page: '#f5f5f2',
+  surface: '#ffffff',
+  surfaceAlt: '#f0f0ec',
+  border: '#e0e0d8',
+  borderStrong: '#c8c8c0',
+  text: '#1a1a18',
+  textMuted: '#5a5a52',
+  textDim: '#888880',
+  textFaint: '#aaaaaa',
+  userBubbleBg: '#e8f0e8',
+  userBubbleBorder: '#b8d4b8',
+  accent: '#2a6a2a',
+  accentBorder: '#2a5a2a',
+  accentText: '#ffffff',
+  accentBg: '#2a6a2a',
+  strongText: '#1a1a18',
+}
+
+function makeStyles(t) {
+  return {
+    page: {
+      minHeight: '100vh',
+      background: t.page,
+      color: t.text,
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '780px',
+      margin: '0 auto',
+      padding: '0 0 40px',
+      transition: 'background 0.2s, color 0.2s',
+    },
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '18px 24px 16px',
+      borderBottom: `1px solid ${t.border}`,
+    },
+    headerLeft: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+    },
+    avatar: {
+      width: '34px',
+      height: '34px',
+      borderRadius: '8px',
+      background: t.surfaceAlt,
+      border: `1px solid ${t.border}`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '18px',
+    },
+    title: {
+      fontSize: '15px',
+      fontWeight: 600,
+      color: t.text,
+      margin: 0,
+      lineHeight: 1.2,
+    },
+    subtitle: {
+      fontSize: '12px',
+      color: t.textDim,
+      margin: 0,
+    },
+    statusDot: (active) => ({
+      width: '7px',
+      height: '7px',
+      borderRadius: '50%',
+      background: active ? t.accent : '#7c7c4a',
+      display: 'inline-block',
+      marginRight: '6px',
+    }),
+    statusText: {
+      fontSize: '12px',
+      color: t.textDim,
+    },
+    themeBtn: {
+      fontSize: '14px',
+      background: 'none',
+      border: `1px solid ${t.border}`,
+      borderRadius: '5px',
+      padding: '3px 8px',
+      cursor: 'pointer',
+      marginLeft: '10px',
+      color: t.textDim,
+      lineHeight: 1,
+    },
+    clearBtn: {
+      fontSize: '12px',
+      color: t.textDim,
+      background: 'none',
+      border: `1px solid ${t.border}`,
+      borderRadius: '5px',
+      padding: '3px 10px',
+      cursor: 'pointer',
+      marginLeft: '8px',
+    },
+    quickGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(168px, 1fr))',
+      gap: '6px',
+      padding: '20px 24px 0',
+    },
+    quickBtn: {
+      background: t.surfaceAlt,
+      border: `1px solid ${t.border}`,
+      borderRadius: '8px',
+      padding: '9px 11px',
+      cursor: 'pointer',
+      textAlign: 'left',
+      fontSize: '13px',
+      color: t.textMuted,
+      lineHeight: 1.35,
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '7px',
+      transition: 'border-color 0.12s, color 0.12s',
+    },
+    quickLabel: {
+      fontSize: '11px',
+      color: t.textFaint,
+      textTransform: 'uppercase',
+      letterSpacing: '0.06em',
+      padding: '20px 24px 10px',
+    },
+    messages: {
+      flex: 1,
+      padding: '20px 24px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '14px',
+    },
+    userBubble: {
+      alignSelf: 'flex-end',
+      background: t.userBubbleBg,
+      border: `1px solid ${t.userBubbleBorder}`,
+      borderRadius: '10px 10px 2px 10px',
+      padding: '9px 13px',
+      maxWidth: '72%',
+      fontSize: '14px',
+      lineHeight: 1.5,
+      color: t.text,
+    },
+    assistantBubble: {
+      background: t.surface,
+      border: `1px solid ${t.border}`,
+      borderRadius: '2px 10px 10px 10px',
+      padding: '14px 16px',
+    },
+    assistantHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      marginBottom: '10px',
+    },
+    assistantName: {
+      fontSize: '12px',
+      color: t.textDim,
+      fontWeight: 500,
+    },
+    answerText: {
+      fontSize: '15px',
+      lineHeight: 1.65,
+      color: t.text,
+      margin: 0,
+    },
+    bulletRow: {
+      display: 'flex',
+      gap: '8px',
+      margin: '2px 0',
+      fontSize: '15px',
+      lineHeight: 1.6,
+      color: t.text,
+    },
+    bulletAccent: {
+      color: t.accent,
+      flexShrink: 0,
+      marginTop: '2px',
+    },
+    followBtns: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      marginTop: '12px',
+    },
+    followBtn: {
+      fontSize: '12px',
+      color: t.textDim,
+      background: 'none',
+      border: `1px solid ${t.border}`,
+      borderRadius: '5px',
+      padding: '3px 9px',
+      cursor: 'pointer',
+    },
+    typingBubble: {
+      background: t.surface,
+      border: `1px solid ${t.border}`,
+      borderRadius: '2px 10px 10px 10px',
+      padding: '14px 16px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+    },
+    quickStrip: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      padding: '0 24px 12px',
+    },
+    quickPill: {
+      background: t.surfaceAlt,
+      border: `1px solid ${t.border}`,
+      borderRadius: '20px',
+      padding: '4px 11px',
+      cursor: 'pointer',
+      fontSize: '12px',
+      color: t.textDim,
+      whiteSpace: 'nowrap',
+    },
+    inputRow: {
+      padding: '0 24px',
+      display: 'flex',
+      gap: '8px',
+      alignItems: 'flex-end',
+    },
+    textarea: {
+      flex: 1,
+      background: t.surface,
+      border: `1px solid ${t.border}`,
+      borderRadius: '8px',
+      padding: '10px 13px',
+      fontSize: '14px',
+      lineHeight: 1.5,
+      color: t.text,
+      fontFamily: 'inherit',
+      resize: 'none',
+      outline: 'none',
+    },
+    sendBtn: (active) => ({
+      padding: '10px 18px',
+      borderRadius: '8px',
+      background: active ? t.accentBg : t.surfaceAlt,
+      border: `1px solid ${active ? t.accentBorder : t.border}`,
+      color: active ? t.accentText : t.textFaint,
+      fontSize: '14px',
+      fontWeight: 500,
+      cursor: active ? 'pointer' : 'default',
+      height: '60px',
+      flexShrink: 0,
+      transition: 'all 0.12s',
+    }),
+    hint: {
+      fontSize: '11px',
+      color: t.textFaint,
+      textAlign: 'right',
+      padding: '5px 24px 0',
+    },
+    strongText: {
+      color: t.strongText,
+      fontWeight: 600,
+    },
+  }
+}
+
+function renderAnswer(text, S) {
   const lines = text.split('\n')
   return lines.map((line, i) => {
     if (!line.trim()) return <div key={i} style={{ height: '6px' }} />
@@ -254,7 +311,7 @@ function renderAnswer(text, setQuery, inputRef) {
     const parts = line.split(/(\*\*[^*]+\*\*)/g)
     const rendered = parts.map((part, j) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={j} style={{ color: '#e8e6e0', fontWeight: 600 }}>{part.slice(2, -2)}</strong>
+        return <strong key={j} style={S.strongText}>{part.slice(2, -2)}</strong>
       }
       return part
     })
@@ -275,12 +332,16 @@ function renderAnswer(text, setQuery, inputRef) {
 }
 
 export default function Alfred() {
+  const [dark, setDark] = useState(true)
   const [query, setQuery] = useState('')
   const [messages, setMessages] = useState([])
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(false)
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
+
+  const t = dark ? DARK : LIGHT
+  const S = makeStyles(t)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -328,7 +389,7 @@ export default function Alfred() {
       {/* Header */}
       <div style={S.header}>
         <div style={S.headerLeft}>
-          <div style={S.avatar}>🦉</div>
+          <div style={S.avatar}>🤵</div>
           <div>
             <p style={S.title}>Alfred</p>
             <p style={S.subtitle}>MediRegs · VitalLaw · demo co-pilot</p>
@@ -337,6 +398,13 @@ export default function Alfred() {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span style={S.statusDot(!loading)} />
           <span style={S.statusText}>{loading ? 'Thinking...' : 'Ready'}</span>
+          <button
+            style={S.themeBtn}
+            onClick={() => setDark(d => !d)}
+            title="Toggle light/dark mode"
+          >
+            {dark ? '☀️' : '🌙'}
+          </button>
           {hasMessages && (
             <button style={S.clearBtn} onClick={() => { setMessages([]); setHistory([]); setQuery('') }}>
               Clear
@@ -355,8 +423,8 @@ export default function Alfred() {
                 key={p.label}
                 style={S.quickBtn}
                 onClick={() => ask(p.prompt)}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = '#2a2a22'; e.currentTarget.style.color = '#c8c6c0' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1e1e1e'; e.currentTarget.style.color = '#9a9890' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderStrong; e.currentTarget.style.color = t.text }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.color = t.textMuted }}
               >
                 <span>{p.icon}</span>
                 <span>{p.label}</span>
@@ -376,12 +444,12 @@ export default function Alfred() {
                   <div style={S.userBubble}>{msg.content}</div>
                 </div>
               ) : (
-                <div style={{ ...S.assistantBubble, borderColor: msg.error ? '#3a1a1a' : '#1e1e1e' }}>
+                <div style={{ ...S.assistantBubble, borderColor: msg.error ? '#c0392b' : t.border }}>
                   <div style={S.assistantHeader}>
-                    <span style={{ fontSize: '14px' }}>🦉</span>
+                    <span style={{ fontSize: '14px' }}>🤵</span>
                     <span style={S.assistantName}>Alfred</span>
                   </div>
-                  <div>{renderAnswer(msg.content, setQuery, inputRef)}</div>
+                  <div>{renderAnswer(msg.content, S)}</div>
                   {!msg.error && (
                     <div style={S.followBtns}>
                       {[
@@ -393,8 +461,8 @@ export default function Alfred() {
                           key={btn.label}
                           style={S.followBtn}
                           onClick={() => ask(btn.prompt)}
-                          onMouseEnter={e => e.currentTarget.style.color = '#9a9890'}
-                          onMouseLeave={e => e.currentTarget.style.color = '#5a5a52'}
+                          onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
+                          onMouseLeave={e => e.currentTarget.style.color = t.textDim}
                         >
                           {btn.label}
                         </button>
@@ -408,8 +476,8 @@ export default function Alfred() {
 
           {loading && (
             <div style={S.typingBubble}>
-              <span style={{ fontSize: '14px' }}>🦉</span>
-              <span style={{ color: '#3a3a32', fontSize: '20px', letterSpacing: '3px' }}>...</span>
+              <span style={{ fontSize: '14px' }}>🤵</span>
+              <span style={{ color: t.textFaint, fontSize: '20px', letterSpacing: '3px' }}>...</span>
             </div>
           )}
           <div ref={bottomRef} />
@@ -424,8 +492,8 @@ export default function Alfred() {
               key={p.label}
               style={S.quickPill}
               onClick={() => ask(p.prompt)}
-              onMouseEnter={e => e.currentTarget.style.color = '#9a9890'}
-              onMouseLeave={e => e.currentTarget.style.color = '#5a5a52'}
+              onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
+              onMouseLeave={e => e.currentTarget.style.color = t.textDim}
             >
               {p.icon} {p.label}
             </button>
