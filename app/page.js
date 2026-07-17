@@ -65,23 +65,22 @@ const LIGHT = {
   logoBg: '#e8e8e4',
 }
 
-function ButlerLogo({ fill, bg }) {
+function ButlerLogo({ size = 34, bg }) {
   return (
-    <svg width="34" height="34" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: '8px', background: bg }}>
-      <circle cx="34" cy="22" r="13" fill={fill} opacity="0.95"/>
-      <ellipse cx="34" cy="22" rx="5" ry="6.5" fill={bg}/>
-      <circle cx="29.5" cy="19.5" r="2" fill={fill}/>
-      <circle cx="38.5" cy="19.5" r="2" fill={fill}/>
-      <path d="M30 26 Q34 29 38 26" fill="none" stroke={fill} strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M21 42 Q16 40 14 52 L19 53 Q21 45 24 44 Z" fill={fill} opacity="0.95"/>
-      <path d="M47 42 Q52 40 54 52 L49 53 Q47 45 44 44 Z" fill={fill} opacity="0.95"/>
-      <path d="M24 37 Q29 34 34 33 Q39 34 44 37 L47 42 Q40 39 34 38.5 Q28 39 21 42 Z" fill={fill} opacity="0.95"/>
-      <rect x="30" y="33" width="8" height="4" rx="1" fill={bg}/>
-      <path d="M32 33 L30 28 L34 31 L38 28 L36 33 Z" fill={fill}/>
-      <path d="M30 28 L27 24 L34 28 Z" fill={fill}/>
-      <path d="M38 28 L41 24 L34 28 Z" fill={fill}/>
-      <ellipse cx="34" cy="28" rx="2" ry="1.5" fill={fill}/>
-    </svg>
+    <div style={{
+      width: size,
+      height: size,
+      borderRadius: '8px',
+      background: bg,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: size * 0.55,
+      flexShrink: 0,
+      userSelect: 'none',
+    }}>
+      🤵
+    </div>
   )
 }
 
@@ -574,7 +573,7 @@ export default function Alfred() {
 
         <div style={S.header}>
           <div style={S.headerLeft}>
-            <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+            <ButlerLogo bg={t.logoBg} />
             <div>
               <p style={S.title}>Alfred</p>
               <p style={S.subtitle}>MediRegs · VitalLaw · demo co-pilot</p>
@@ -623,7 +622,7 @@ export default function Alfred() {
                 ) : (
                   <div style={S.assistantBubble(msg.error)}>
                     <div style={S.assistantHeader}>
-                      <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+                      <ButlerLogo size={22} bg={t.logoBg} />
                       <span style={S.assistantName}>Alfred</span>
                     </div>
                     <div>{renderAnswer(msg.content, S)}</div>
@@ -653,7 +652,7 @@ export default function Alfred() {
 
             {loading && (
               <div style={S.typingBubble}>
-                <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+                <ButlerLogo size={22} bg={t.logoBg} />
                 <span style={{ color: t.textFaint, fontSize: '20px', letterSpacing: '3px' }}>...</span>
               </div>
             )}
@@ -717,3 +716,4 @@ export default function Alfred() {
     </div>
   )
 }
+
