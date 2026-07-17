@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const QUICK_PROMPTS = [
   { label: 'ROI objection', icon: '💰', prompt: 'Prospect says the ROI on compliance tools is hard to quantify. How do I respond?' },
@@ -34,6 +34,11 @@ const DARK = {
   accentText: '#a8d4a8',
   accentBg: '#2a4a2a',
   strongText: '#e8e6e0',
+  micActive: '#c0392b',
+  micActiveBorder: '#a93226',
+  micActiveText: '#ffffff',
+  logoFill: '#e8e6e0',
+  logoBg: '#1a2a1a',
 }
 
 const LIGHT = {
@@ -53,20 +58,49 @@ const LIGHT = {
   accentText: '#ffffff',
   accentBg: '#2a6a2a',
   strongText: '#1a1a18',
+  micActive: '#c0392b',
+  micActiveBorder: '#a93226',
+  micActiveText: '#ffffff',
+  logoFill: '#1a1a18',
+  logoBg: '#e8e8e4',
+}
+
+function ButlerLogo({ fill, bg }) {
+  return (
+    <svg width="34" height="34" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: '8px', background: bg }}>
+      <circle cx="34" cy="22" r="13" fill={fill} opacity="0.95"/>
+      <ellipse cx="34" cy="22" rx="5" ry="6.5" fill={bg}/>
+      <circle cx="29.5" cy="19.5" r="2" fill={fill}/>
+      <circle cx="38.5" cy="19.5" r="2" fill={fill}/>
+      <path d="M30 26 Q34 29 38 26" fill="none" stroke={fill} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M21 42 Q16 40 14 52 L19 53 Q21 45 24 44 Z" fill={fill} opacity="0.95"/>
+      <path d="M47 42 Q52 40 54 52 L49 53 Q47 45 44 44 Z" fill={fill} opacity="0.95"/>
+      <path d="M24 37 Q29 34 34 33 Q39 34 44 37 L47 42 Q40 39 34 38.5 Q28 39 21 42 Z" fill={fill} opacity="0.95"/>
+      <rect x="30" y="33" width="8" height="4" rx="1" fill={bg}/>
+      <path d="M32 33 L30 28 L34 31 L38 28 L36 33 Z" fill={fill}/>
+      <path d="M30 28 L27 24 L34 28 Z" fill={fill}/>
+      <path d="M38 28 L41 24 L34 28 Z" fill={fill}/>
+      <ellipse cx="34" cy="28" rx="2" ry="1.5" fill={fill}/>
+    </svg>
+  )
 }
 
 function makeStyles(t) {
   return {
-    page: {
+    wrapper: {
       minHeight: '100vh',
+      width: '100%',
       background: t.page,
-      color: t.text,
-      display: 'flex',
-      flexDirection: 'column',
+      transition: 'background 0.2s',
+    },
+    page: {
       maxWidth: '780px',
       margin: '0 auto',
       padding: '0 0 40px',
-      transition: 'background 0.2s, color 0.2s',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      color: t.text,
     },
     header: {
       display: 'flex',
@@ -80,17 +114,6 @@ function makeStyles(t) {
       alignItems: 'center',
       gap: '10px',
     },
-    avatar: {
-      width: '34px',
-      height: '34px',
-      borderRadius: '8px',
-      background: t.surfaceAlt,
-      border: `1px solid ${t.border}`,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '18px',
-    },
     title: {
       fontSize: '15px',
       fontWeight: 600,
@@ -103,26 +126,30 @@ function makeStyles(t) {
       color: t.textDim,
       margin: 0,
     },
+    headerRight: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+    },
     statusDot: (active) => ({
       width: '7px',
       height: '7px',
       borderRadius: '50%',
       background: active ? t.accent : '#7c7c4a',
       display: 'inline-block',
-      marginRight: '6px',
+      marginRight: '4px',
     }),
     statusText: {
       fontSize: '12px',
       color: t.textDim,
     },
-    themeBtn: {
+    iconBtn: {
       fontSize: '14px',
       background: 'none',
       border: `1px solid ${t.border}`,
       borderRadius: '5px',
       padding: '3px 8px',
       cursor: 'pointer',
-      marginLeft: '10px',
       color: t.textDim,
       lineHeight: 1,
     },
@@ -134,7 +161,6 @@ function makeStyles(t) {
       borderRadius: '5px',
       padding: '3px 10px',
       cursor: 'pointer',
-      marginLeft: '8px',
     },
     quickGrid: {
       display: 'grid',
@@ -163,6 +189,7 @@ function makeStyles(t) {
       textTransform: 'uppercase',
       letterSpacing: '0.06em',
       padding: '20px 24px 10px',
+      margin: 0,
     },
     messages: {
       flex: 1,
@@ -182,12 +209,12 @@ function makeStyles(t) {
       lineHeight: 1.5,
       color: t.text,
     },
-    assistantBubble: {
+    assistantBubble: (error) => ({
       background: t.surface,
-      border: `1px solid ${t.border}`,
+      border: `1px solid ${error ? '#c0392b44' : t.border}`,
       borderRadius: '2px 10px 10px 10px',
       padding: '14px 16px',
-    },
+    }),
     assistantHeader: {
       display: 'flex',
       alignItems: 'center',
@@ -203,7 +230,7 @@ function makeStyles(t) {
       fontSize: '15px',
       lineHeight: 1.65,
       color: t.text,
-      margin: 0,
+      margin: '0 0 4px',
     },
     bulletRow: {
       display: 'flex',
@@ -258,8 +285,13 @@ function makeStyles(t) {
       color: t.textDim,
       whiteSpace: 'nowrap',
     },
-    inputRow: {
+    inputArea: {
       padding: '0 24px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+    },
+    inputRow: {
       display: 'flex',
       gap: '8px',
       alignItems: 'flex-end',
@@ -290,11 +322,46 @@ function makeStyles(t) {
       flexShrink: 0,
       transition: 'all 0.12s',
     }),
+    voiceBar: (listening) => ({
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: '10px 14px',
+      borderRadius: '8px',
+      background: listening ? '#c0392b18' : t.surfaceAlt,
+      border: `1px solid ${listening ? '#c0392b44' : t.border}`,
+      transition: 'all 0.2s',
+    }),
+    voiceBtn: (listening) => ({
+      padding: '7px 16px',
+      borderRadius: '6px',
+      background: listening ? t.micActive : t.surfaceAlt,
+      border: `1px solid ${listening ? t.micActiveBorder : t.border}`,
+      color: listening ? t.micActiveText : t.textMuted,
+      fontSize: '13px',
+      fontWeight: 500,
+      cursor: 'pointer',
+      flexShrink: 0,
+      transition: 'all 0.15s',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+    }),
+    voiceTranscript: {
+      fontSize: '13px',
+      color: t.textMuted,
+      fontStyle: 'italic',
+      flex: 1,
+      minWidth: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
     hint: {
       fontSize: '11px',
       color: t.textFaint,
       textAlign: 'right',
-      padding: '5px 24px 0',
+      padding: '4px 0 0',
     },
     strongText: {
       color: t.strongText,
@@ -304,10 +371,8 @@ function makeStyles(t) {
 }
 
 function renderAnswer(text, S) {
-  const lines = text.split('\n')
-  return lines.map((line, i) => {
+  return text.split('\n').map((line, i) => {
     if (!line.trim()) return <div key={i} style={{ height: '6px' }} />
-
     const parts = line.split(/(\*\*[^*]+\*\*)/g)
     const rendered = parts.map((part, j) => {
       if (part.startsWith('**') && part.endsWith('**')) {
@@ -315,19 +380,15 @@ function renderAnswer(text, S) {
       }
       return part
     })
-
-    const isBullet = line.trim().startsWith('- ') || line.trim().startsWith('* ')
-    if (isBullet) {
-      const content = rendered.map((p, j) => typeof p === 'string' ? p.replace(/^[-*]\s+/, '') : p)
+    if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
       return (
         <div key={i} style={S.bulletRow}>
           <span style={S.bulletAccent}>›</span>
-          <span>{content}</span>
+          <span>{rendered.map((p) => typeof p === 'string' ? p.replace(/^[-*]\s+/, '') : p)}</span>
         </div>
       )
     }
-
-    return <p key={i} style={{ ...S.answerText, marginBottom: '4px' }}>{rendered}</p>
+    return <p key={i} style={S.answerText}>{rendered}</p>
   })
 }
 
@@ -337,18 +398,126 @@ export default function Alfred() {
   const [messages, setMessages] = useState([])
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(false)
+  const [listening, setListening] = useState(false)
+  const [liveTranscript, setLiveTranscript] = useState('')
+  const [voiceSupported, setVoiceSupported] = useState(false)
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
+  const recognitionRef = useRef(null)
+  const accumulatedRef = useRef('')
+  const silenceTimerRef = useRef(null)
 
   const t = dark ? DARK : LIGHT
   const S = makeStyles(t)
 
   useEffect(() => {
+    setVoiceSupported('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)
+  }, [])
+
+  useEffect(() => {
+    document.body.className = dark ? 'dark' : 'light'
+  }, [dark])
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  async function ask(questionText) {
-    const q = (questionText || query).trim()
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop()
+      recognitionRef.current = null
+    }
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current)
+      silenceTimerRef.current = null
+    }
+    setListening(false)
+  }, [])
+
+  const fireQuery = useCallback((text) => {
+    const q = text.trim()
+    if (!q) return
+    setLiveTranscript('')
+    accumulatedRef.current = ''
+    setQuery('')
+    askWithText(q)
+  }, [])
+
+  const startListening = useCallback(() => {
+    if (!voiceSupported || loading) return
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+    recognition.continuous = true
+    recognition.interimResults = true
+    recognition.lang = 'en-US'
+
+    accumulatedRef.current = ''
+    setLiveTranscript('')
+
+    recognition.onstart = () => setListening(true)
+
+    recognition.onresult = (event) => {
+      let interim = ''
+      let newFinals = ''
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i]
+        if (result.isFinal) {
+          newFinals += result[0].transcript + ' '
+        } else {
+          interim = result[0].transcript
+        }
+      }
+
+      if (newFinals) {
+        accumulatedRef.current += newFinals
+      }
+
+      const display = (accumulatedRef.current + interim).trim()
+      setLiveTranscript(display)
+
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current)
+      if (accumulatedRef.current.trim()) {
+        silenceTimerRef.current = setTimeout(() => {
+          const toFire = accumulatedRef.current.trim()
+          stopListening()
+          if (toFire) fireQuery(toFire)
+        }, 2200)
+      }
+    }
+
+    recognition.onerror = (e) => {
+      if (e.error !== 'no-speech') {
+        console.error('Speech recognition error:', e.error)
+      }
+    }
+
+    recognition.onend = () => {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.start() } catch {}
+      } else {
+        setListening(false)
+        setLiveTranscript('')
+      }
+    }
+
+    recognitionRef.current = recognition
+    recognition.start()
+  }, [voiceSupported, loading, stopListening, fireQuery])
+
+  function toggleVoice() {
+    if (listening) {
+      const toFire = accumulatedRef.current.trim()
+      stopListening()
+      if (toFire) fireQuery(toFire)
+    } else {
+      startListening()
+    }
+  }
+
+  async function askWithText(text) {
+    const q = text.trim()
     if (!q || loading) return
 
     setMessages(prev => [...prev, { role: 'user', content: q }])
@@ -364,15 +533,21 @@ export default function Alfred() {
         body: JSON.stringify({ messages: nextHistory }),
       })
       const data = await res.json()
-      const text = data.text || data.error || 'No response.'
-      setMessages(prev => [...prev, { role: 'assistant', content: text, error: !!data.error }])
-      setHistory(prev => [...prev, { role: 'assistant', content: text }])
+      const text2 = data.text || data.error || 'No response.'
+      setMessages(prev => [...prev, { role: 'assistant', content: text2, error: !!data.error }])
+      setHistory(prev => [...prev, { role: 'assistant', content: text2 }])
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Connection error.', error: true }])
     } finally {
       setLoading(false)
       setTimeout(() => inputRef.current?.focus(), 50)
     }
+  }
+
+  async function ask(questionText) {
+    const q = (questionText || query).trim()
+    if (!q || loading) return
+    await askWithText(q)
   }
 
   function handleKey(e) {
@@ -382,145 +557,163 @@ export default function Alfred() {
     }
   }
 
+  function clearSession() {
+    stopListening()
+    setMessages([])
+    setHistory([])
+    setQuery('')
+    setLiveTranscript('')
+    accumulatedRef.current = ''
+  }
+
   const hasMessages = messages.length > 0
 
   return (
-    <div style={S.page}>
-      {/* Header */}
-      <div style={S.header}>
-        <div style={S.headerLeft}>
-          <div style={S.avatar}>🤵</div>
-          <div>
-            <p style={S.title}>Alfred</p>
-            <p style={S.subtitle}>MediRegs · VitalLaw · demo co-pilot</p>
+    <div style={S.wrapper}>
+      <div style={S.page}>
+
+        <div style={S.header}>
+          <div style={S.headerLeft}>
+            <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+            <div>
+              <p style={S.title}>Alfred</p>
+              <p style={S.subtitle}>MediRegs · VitalLaw · demo co-pilot</p>
+            </div>
+          </div>
+          <div style={S.headerRight}>
+            <span style={S.statusDot(!loading)} />
+            <span style={S.statusText}>{loading ? 'Thinking...' : listening ? 'Listening...' : 'Ready'}</span>
+            <button style={S.iconBtn} onClick={() => setDark(d => !d)} title="Toggle theme">
+              {dark ? '☀️' : '🌙'}
+            </button>
+            {hasMessages && (
+              <button style={S.clearBtn} onClick={clearSession}>Clear</button>
+            )}
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={S.statusDot(!loading)} />
-          <span style={S.statusText}>{loading ? 'Thinking...' : 'Ready'}</span>
-          <button
-            style={S.themeBtn}
-            onClick={() => setDark(d => !d)}
-            title="Toggle light/dark mode"
-          >
-            {dark ? '☀️' : '🌙'}
-          </button>
-          {hasMessages && (
-            <button style={S.clearBtn} onClick={() => { setMessages([]); setHistory([]); setQuery('') }}>
-              Clear
-            </button>
-          )}
-        </div>
-      </div>
 
-      {/* Quick launch grid (empty state) */}
-      {!hasMessages && (
-        <>
-          <p style={S.quickLabel}>Quick launch</p>
-          <div style={S.quickGrid}>
-            {QUICK_PROMPTS.map(p => (
+        {!hasMessages && (
+          <>
+            <p style={S.quickLabel}>Quick launch</p>
+            <div style={S.quickGrid}>
+              {QUICK_PROMPTS.map(p => (
+                <button
+                  key={p.label}
+                  style={S.quickBtn}
+                  onClick={() => ask(p.prompt)}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderStrong; e.currentTarget.style.color = t.text }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.color = t.textMuted }}
+                >
+                  <span>{p.icon}</span>
+                  <span>{p.label}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {hasMessages && (
+          <div style={S.messages}>
+            {messages.map((msg, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
+                {msg.role === 'user' ? (
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <div style={S.userBubble}>{msg.content}</div>
+                  </div>
+                ) : (
+                  <div style={S.assistantBubble(msg.error)}>
+                    <div style={S.assistantHeader}>
+                      <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+                      <span style={S.assistantName}>Alfred</span>
+                    </div>
+                    <div>{renderAnswer(msg.content, S)}</div>
+                    {!msg.error && (
+                      <div style={S.followBtns}>
+                        {[
+                          { label: 'Go deeper', prompt: 'Tell me more about that' },
+                          { label: 'Shorter', prompt: 'Give me a one-sentence version I can say right now' },
+                          { label: 'Next question →', prompt: 'What should I ask them next?' },
+                        ].map(btn => (
+                          <button
+                            key={btn.label}
+                            style={S.followBtn}
+                            onClick={() => ask(btn.prompt)}
+                            onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
+                            onMouseLeave={e => e.currentTarget.style.color = t.textDim}
+                          >
+                            {btn.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {loading && (
+              <div style={S.typingBubble}>
+                <ButlerLogo fill={t.logoFill} bg={t.logoBg} />
+                <span style={{ color: t.textFaint, fontSize: '20px', letterSpacing: '3px' }}>...</span>
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+        )}
+
+        {hasMessages && (
+          <div style={S.quickStrip}>
+            {QUICK_PROMPTS.slice(0, 6).map(p => (
               <button
                 key={p.label}
-                style={S.quickBtn}
+                style={S.quickPill}
                 onClick={() => ask(p.prompt)}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderStrong; e.currentTarget.style.color = t.text }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.color = t.textMuted }}
+                onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
+                onMouseLeave={e => e.currentTarget.style.color = t.textDim}
               >
-                <span>{p.icon}</span>
-                <span>{p.label}</span>
+                {p.icon} {p.label}
               </button>
             ))}
           </div>
-        </>
-      )}
+        )}
 
-      {/* Messages */}
-      {hasMessages && (
-        <div style={S.messages}>
-          {messages.map((msg, i) => (
-            <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
-              {msg.role === 'user' ? (
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <div style={S.userBubble}>{msg.content}</div>
-                </div>
-              ) : (
-                <div style={{ ...S.assistantBubble, borderColor: msg.error ? '#c0392b' : t.border }}>
-                  <div style={S.assistantHeader}>
-                    <span style={{ fontSize: '14px' }}>🤵</span>
-                    <span style={S.assistantName}>Alfred</span>
-                  </div>
-                  <div>{renderAnswer(msg.content, S)}</div>
-                  {!msg.error && (
-                    <div style={S.followBtns}>
-                      {[
-                        { label: 'Go deeper', prompt: 'Tell me more about that' },
-                        { label: 'Shorter', prompt: 'Give me a one-sentence version I can say right now' },
-                        { label: 'Next question →', prompt: 'What should I ask them next?' },
-                      ].map(btn => (
-                        <button
-                          key={btn.label}
-                          style={S.followBtn}
-                          onClick={() => ask(btn.prompt)}
-                          onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
-                          onMouseLeave={e => e.currentTarget.style.color = t.textDim}
-                        >
-                          {btn.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
-
-          {loading && (
-            <div style={S.typingBubble}>
-              <span style={{ fontSize: '14px' }}>🤵</span>
-              <span style={{ color: t.textFaint, fontSize: '20px', letterSpacing: '3px' }}>...</span>
+        <div style={S.inputArea}>
+          {voiceSupported && (
+            <div style={S.voiceBar(listening)}>
+              <button style={S.voiceBtn(listening)} onClick={toggleVoice}>
+                <span>{listening ? '⏹' : '🎙'}</span>
+                <span>{listening ? 'Stop' : 'Start listening'}</span>
+              </button>
+              <span style={S.voiceTranscript}>
+                {listening
+                  ? liveTranscript || 'Listening — speak the objection or question...'
+                  : 'Press to start voice — fires automatically after you finish speaking'}
+              </span>
             </div>
           )}
-          <div ref={bottomRef} />
-        </div>
-      )}
 
-      {/* Quick strip (active state) */}
-      {hasMessages && (
-        <div style={S.quickStrip}>
-          {QUICK_PROMPTS.slice(0, 6).map(p => (
+          <div style={S.inputRow}>
+            <textarea
+              ref={inputRef}
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onKeyDown={handleKey}
+              placeholder="Or type the objection or question they just asked..."
+              rows={2}
+              style={S.textarea}
+            />
             <button
-              key={p.label}
-              style={S.quickPill}
-              onClick={() => ask(p.prompt)}
-              onMouseEnter={e => e.currentTarget.style.color = t.textMuted}
-              onMouseLeave={e => e.currentTarget.style.color = t.textDim}
+              style={S.sendBtn(!!query.trim() && !loading)}
+              onClick={() => ask()}
+              disabled={!query.trim() || loading}
             >
-              {p.icon} {p.label}
+              Ask
             </button>
-          ))}
+          </div>
+          <p style={S.hint}>Enter to send · Shift+Enter for new line</p>
         </div>
-      )}
 
-      {/* Input */}
-      <div style={S.inputRow}>
-        <textarea
-          ref={inputRef}
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={handleKey}
-          placeholder="Type the objection or question they just asked..."
-          rows={2}
-          style={S.textarea}
-        />
-        <button
-          style={S.sendBtn(!!query.trim() && !loading)}
-          onClick={() => ask()}
-          disabled={!query.trim() || loading}
-        >
-          Ask
-        </button>
       </div>
-      <p style={S.hint}>Enter to send · Shift+Enter for new line</p>
     </div>
   )
 }
