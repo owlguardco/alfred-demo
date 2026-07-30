@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import CertificationView from './certification/CertificationView'
 
 const QUICK_PROMPTS = [
   { label: 'ROI objection', icon: '💰', prompt: 'Prospect says the ROI on compliance tools is hard to quantify. How do I respond?' },
@@ -109,6 +110,7 @@ function renderAnswer(text, S) {
 
 export default function Alfred() {
   const [dark, setDark] = useState(true)
+  const [view, setView] = useState('chat')
   const [query, setQuery] = useState('')
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
@@ -274,7 +276,10 @@ export default function Alfred() {
     r.start()
   }
 
-  function stopListening() {
+  // `submitPending: false` stops silently — used when leaving the chat for
+  // Certification Mode, where the half-captured line is script narration, not
+  // a question for Alfred.
+  function stopListening({ submitPending = true } = {}) {
     listeningRef.current = false
     setListening(false)
     if (silenceTimerRef.current) {
@@ -282,7 +287,7 @@ export default function Alfred() {
       silenceTimerRef.current = null
     }
     // Fire whatever we have before stopping
-    const text = finalTranscriptRef.current.trim()
+    const text = submitPending ? finalTranscriptRef.current.trim() : ''
     if (recognitionRef.current) {
       try { recognitionRef.current.abort() } catch {}
       recognitionRef.current = null
@@ -297,6 +302,15 @@ export default function Alfred() {
     else startListening()
   }
 
+  // Certification Mode is a read-aloud script. Left running, speech
+  // recognition would transcribe the walkthrough and fire an answer at every
+  // pause — Alfred answering questions nobody asked, mid-cert. Stop silently
+  // so the partial line isn't submitted on the way out.
+  function openCertification() {
+    if (listeningRef.current) stopListening({ submitPending: false })
+    setView('certification')
+  }
+
   function clearSession() {
     stopListening()
     historyRef.current = []
@@ -309,6 +323,10 @@ export default function Alfred() {
   const hasMessages = messages.length > 0
   const statusText = loading ? 'Thinking...' : listening ? 'Listening...' : 'Ready'
   const statusColor = listening ? '#c0392b' : loading ? '#7c7c4a' : t.accent
+
+  if (view === 'certification') {
+    return <CertificationView dark={dark} onExit={() => setView('chat')} />
+  }
 
   return (
     <div style={S.wrapper}>
@@ -326,6 +344,7 @@ export default function Alfred() {
           <div style={S.headerRight}>
             <span style={{ ...S.statusDot(listening), background: statusColor }} />
             <span style={S.statusText}>{statusText}</span>
+            <button style={S.iconBtn} onClick={openCertification} title="Certification Mode — timed script walkthrough">📋</button>
             <button style={S.iconBtn} onClick={() => setDark(d => !d)}>{dark ? '☀️' : '🌙'}</button>
             {hasMessages && <button style={S.clearBtn} onClick={clearSession}>Clear</button>}
           </div>

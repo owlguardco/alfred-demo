@@ -1,0 +1,109 @@
+{
+  "id": "mediregs_master_suite",
+  "title": "MediRegs Master Suite Certification",
+  "estimated_minutes": 12,
+  "steps": [
+    {
+      "id": 1,
+      "duration_seconds": 30,
+      "app_cue": "Home page — logged in, Master Suite loaded",
+      "say": "MediRegs pulls everything you need into one place — content and tools you can browse, search, or run right through analytical calculators. This is Master Suite, our most complete offering. Up top here you've got your coding tools, coverage tools, and Medicare calculators, all one click away."
+    },
+    {
+      "id": 2,
+      "duration_seconds": 20,
+      "app_cue": "Point to OPPS, Professional, MS-DRG tools in top card",
+      "say": "These calculators — OPPS, Professional Fee, MS-DRG — sit right on the home screen so you're never digging for them."
+    },
+    {
+      "id": 3,
+      "duration_seconds": 40,
+      "app_cue": "Point to content library card, middle of home page",
+      "say": "Below that is the content library. Everything's organized so you can get to CMS libraries, OIG, other federal agencies, laws and regs, court cases, coverage — NCDs, LCDs, coverage articles — all from here. On the coding and reimbursement side, Master Suite includes AHA Coding Clinics and AMA's CPT Assistant and Insider's View, so you're getting official coding guidance, not just our interpretation of it. And if your state matters — statutes, admin code, Medicaid info — that's in here too."
+    },
+    {
+      "id": 4,
+      "duration_seconds": 25,
+      "app_cue": "Point to Subscription Add-on card, right side",
+      "say": "On the right, this is your subscription add-on card — whatever extra titles or tools your organization picked to fit your specific needs. Practical guidance, newsletters, attorney-written articles, specialty coding resources. And if you want to see what else is out there, the Available tab lets you browse anytime."
+    },
+    {
+      "id": 5,
+      "duration_seconds": 30,
+      "app_cue": "Point to News Alerts card, bottom right",
+      "say": "Last piece on the home page — news alerts. What's New is your daily digest, customized to what you actually subscribe to, and it hits your inbox too. Week in Review rolls up the major federal issuances from the prior week — that comes in your Monday email. And if there's a specific topic you're tracking, you can set a custom alert based on any search."
+    },
+    {
+      "id": 6,
+      "duration_seconds": 15,
+      "app_cue": "Click Coding & Payment Tools tab at top",
+      "say": "Now let's get into the tools themselves. Everything's centralized in one tab so you can flip between them without losing your place."
+    },
+    {
+      "id": 7,
+      "duration_seconds": 35,
+      "app_cue": "Open Code Explorer Elite. Type example: 897 X2A7358 0QB00ZZ 01NR0ZZ 04CJ0ZZ F03 M51.26 37238",
+      "say": "Code Explorer Elite searches across multiple code sets, seven years back. It pulls in provider and locality-adjusted payment rates and links you straight to related information about that code. Let me run a quick example."
+    },
+    {
+      "id": 8,
+      "duration_seconds": 35,
+      "app_cue": "Open OPPS Calculator. Type example: 37236 37224 71045 93005",
+      "say": "OPPS gives you a ten-year look-back and estimates the provider-specific claim value under Medicare's Outpatient Prospective Payment System, cost outlier included. And for volume — we've got an off-hours OPPS Batch Service that can chew through thousands of claim scenarios overnight."
+    },
+    {
+      "id": 9,
+      "duration_seconds": 30,
+      "app_cue": "Open Professional Fee Schedule. Type example: 99285 93010 12004 85025",
+      "say": "PFS handles the physician and professional side. Ten-year look-back, calculates Medicare's locality-specific payment rates."
+    },
+    {
+      "id": 10,
+      "duration_seconds": 35,
+      "app_cue": "Open NCCI Code Pair Check. Type example: 29582 61885 75630 85025 93005 94760 94761",
+      "say": "NCCI Code Pair Check gives you visibility into National Correct Coding Initiative edits — either a single code or a combination. Medicare and Medicaid edits by quarter, for both hospital and physician queries. You can check one code or compare a full set."
+    },
+    {
+      "id": 11,
+      "duration_seconds": 40,
+      "app_cue": "Open MS-DRG Grouper/Calculator. Grouper example: diagnoses C84Z7, A0221, procedure 07HT4YZ. Calculator example: MS-DRG 190",
+      "say": "MS-DRG Grouper and Calculator — ten-year look-back, unadjusted or provider-specific, under the Inpatient Prospective Payment System. Covers both Medicare Fee for Service and Medicare Advantage rates. You can group a case based on diagnosis and procedure details straight to a payable MS-DRG, provider-specific reimbursement included."
+    },
+    {
+      "id": 12,
+      "duration_seconds": 35,
+      "app_cue": "Open MS-DRG Analyzer with Batch Calculator. Example: enter 2 providers with DRG 190, include charges, compare results",
+      "say": "The Analyzer with Batch Calculator takes that further — group and calculate up to a thousand scenarios at once. You can run what-if analyses side by side, up to seven at a time, and it calculates outliers too. Let me pull up two providers on DRG 190 so you can see the comparison."
+    },
+    {
+      "id": 13,
+      "duration_seconds": 30,
+      "app_cue": "Open Coverage Search Tool. Examples: FISH, 96360, TAVR, CBC, A53066, L34084, 190.18",
+      "say": "If coverage is what you're after, the Coverage Search Tool covers Medicare National Coverage Decisions and Local Coverage Decisions, articles, and bulletins. Your state preferences are already set under My Libraries, but you can broaden or narrow right from the state selector before you search."
+    },
+    {
+      "id": 14,
+      "duration_seconds": 30,
+      "app_cue": "Open Citation Search. Examples: FR 79 76331 / 87 44502, CFR 21 1306.14 / 42 412.4, USC 21 823 / 21 452, SSA 1812 / 1861",
+      "say": "For direct citations, we've got the Federal Register, Code of Federal Regulations, U.S. Code, and Social Security Act — depending on what product you're in. If you already know the cite, you go straight there."
+    },
+    {
+      "id": 15,
+      "duration_seconds": 40,
+      "app_cue": "Point to search dropdown next to search box",
+      "say": "For research across the full library, there's a few ways in. My Libraries is your default, tailored to your subscription. All Libraries broadens it out without you having to re-tailor anything. Or you can go Advanced — multiple search terms, Boolean connectors, publication date range, title search, and you can specify exactly which libraries to hit."
+    },
+    {
+      "id": 16,
+      "duration_seconds": 25,
+      "app_cue": "Demonstrate a simple search, e.g. Monkeypox, BPH, or EUA",
+      "say": "You can always just browse into a library too, and once you're in, run a simple or advanced search right there within that library or its components."
+    },
+    {
+      "id": 17,
+      "duration_seconds": 30,
+      "app_cue": "Demonstrate advanced search: Telemedicine AND \"Medicare Advantage\" AND 1/1/2022",
+      "say": "One more thing worth knowing — synonyms get pulled in automatically, though you can turn that off. The info button recaps your search parameters. Quotes give you phrase search. You can sort by relevancy or most recent, and every result comes with a snippet and breadcrumb trail so you know exactly where you landed."
+    }
+  ]
+}

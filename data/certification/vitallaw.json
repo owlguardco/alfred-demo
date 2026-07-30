@@ -1,0 +1,175 @@
+{
+  "id": "vitallaw_expert_ai",
+  "title": "VitalLaw Federal Securities & Expert AI Certification",
+  "estimated_minutes": 15,
+  "steps": [
+    {
+      "id": 1,
+      "duration_seconds": 20,
+      "app_cue": "Start at my.vitallaw.com, show login",
+      "say": "This is VitalLaw — Wolters Kluwer's take on giving securities practitioners accurate, timely information they can actually build advice around. Let me show you how it works."
+    },
+    {
+      "id": 2,
+      "duration_seconds": 20,
+      "app_cue": "On VitalLaw Home page",
+      "say": "Whatever practice areas you're subscribed to show up right here on the home page, so jumping between them takes one click."
+    },
+    {
+      "id": 3,
+      "duration_seconds": 15,
+      "app_cue": "Select Securities — Federal & International from Practice Area dashboard",
+      "say": "Let's go into Securities, Federal and International."
+    },
+    {
+      "id": 4,
+      "duration_seconds": 20,
+      "app_cue": "Show Site Preferences, set Practice Area Dashboard preference",
+      "say": "You can set this as your default dashboard right in Site Preferences, so it's what loads every time you log in."
+    },
+    {
+      "id": 5,
+      "duration_seconds": 25,
+      "app_cue": "Point out Content Group sections: Rules and Regulations, News and Blogs, Cases, Acts and Statutes",
+      "say": "The dashboard is broken into content groups — rules and regulations, news and blogs, cases, acts and statutes. If there's a group you're going to lean on more than others, you can customize the tiles to fit how you actually work — drag and drop, or hit the gear icon top right."
+    },
+    {
+      "id": 6,
+      "duration_seconds": 40,
+      "app_cue": "Top left CONTENT tile > Treatises and Explanations > Click SEE ALL > Click CUSTOMIZE > check a couple treatises > SAVE",
+      "say": "Let's customize what shows up. I'll go into Treatises and Explanations, hit See All, then Customize — I can check off exactly the treatises I want to see and save that."
+    },
+    {
+      "id": 7,
+      "duration_seconds": 30,
+      "app_cue": "Open Federal Securities Law Reporter",
+      "say": "This opens the Federal Securities Law Reporter — it defaults to the first section so you can see the full table of contents right away."
+    },
+    {
+      "id": 8,
+      "duration_seconds": 45,
+      "app_cue": "Review Contents panel on left. Expand Securities Act of 1933 > Securities Act of 1933 > Exempted Transactions Sec 4 > open 4th document: Reg. 230.144A",
+      "say": "On the left you've got the full contents panel. Let's drill into Securities Act of 1933, exempted transactions under section 4, and open one of the regulations here."
+    },
+    {
+      "id": 9,
+      "duration_seconds": 30,
+      "app_cue": "Open a document, point out Favorites, Add To folder, Print, Email, Download, Copy Link",
+      "say": "From any document you can favorite it, add it to a folder, print, email, download, or grab a copy link. That's how you collaborate with your team and keep things organized for later."
+    },
+    {
+      "id": 10,
+      "duration_seconds": 30,
+      "app_cue": "Review Document Panel buttons: INFORMATION and HISTORY",
+      "say": "The information button gives you details on the last and next update, citation format, and scope of coverage. History shows you the full amendment trail with links to the releases. And up top, Related Items links you straight to connected content."
+    },
+    {
+      "id": 11,
+      "duration_seconds": 15,
+      "app_cue": "Click Home to return to dashboard",
+      "say": "Let's head back to the dashboard."
+    },
+    {
+      "id": 12,
+      "duration_seconds": 30,
+      "app_cue": "Open Securities Regulation - Loss, Seligman and Paredes under Treatises",
+      "say": "This is one of our core treatises — a comprehensive breakdown of a specific area of law. Essential for building out real research."
+    },
+    {
+      "id": 13,
+      "duration_seconds": 30,
+      "app_cue": "Hover a menu heading, click magnifying glass, discuss searching current document vs section vs entire database, close search",
+      "say": "You can search just this document, the broader section, or the entire database — your call on scope."
+    },
+    {
+      "id": 14,
+      "duration_seconds": 35,
+      "app_cue": "In Contents menu, click Chapter 3 > A. Definitions > 1. Security. Click footnote icon.",
+      "say": "Let's go into Chapter 3, definitions, security. Click the footnote icon here — you'll see links right inside the footnotes."
+    },
+    {
+      "id": 15,
+      "duration_seconds": 30,
+      "app_cue": "Click link to a case, opens new tab with complimentary access to full text. Close window. Hover embedded footnote to show popup.",
+      "say": "Click through to a case citation and you get full-text access, no paywall. And hovering over an embedded footnote pops the language right up on screen — you don't have to go tracking it down separately like you would in print."
+    },
+    {
+      "id": 16,
+      "duration_seconds": 25,
+      "app_cue": "Click Home. Open Securities Act of 1933 to show Act-by-Act view.",
+      "say": "The Federal Securities Law Reporter can also be read act by act — you can just open the whole thing and go through it in order."
+    },
+    {
+      "id": 17,
+      "duration_seconds": 30,
+      "app_cue": "Top right — Practice Tools. Demonstrate Securities Litigation Smart Charts — select topics, jurisdictions, click Results.",
+      "say": "Smart Charts let you pick topics and jurisdictions and get a side-by-side comparison in seconds. This is how you compare multiple states' laws and regulations without opening ten tabs."
+    },
+    {
+      "id": 18,
+      "duration_seconds": 20,
+      "app_cue": "Explain SmartTasks",
+      "say": "SmartTasks walk you through specific, repeatable tasks step by step, paired with our premium expert content the whole way through."
+    },
+    {
+      "id": 19,
+      "duration_seconds": 15,
+      "app_cue": "Open Expert AI (top blue toolbar)",
+      "say": "Now let's get into Expert AI — this is where it gets interesting."
+    },
+    {
+      "id": 20,
+      "duration_seconds": 45,
+      "app_cue": "Type prompt: 'When does the private offering exemption for federal securities apply?' Click arrow. Scroll to review answer, citations, Show Thinking button.",
+      "say": "Natural language, no learning curve. I'll ask when the private offering exemption applies. What comes back is a summary answer grounded entirely in WK's trusted content — nothing pulled from the open web. You get citations right alongside it, sourced back to our material, and you can thumbs up or down the answer or save it for later. Let's click Show Thinking — this is the model's actual research process, laid out so you can see exactly how it got there."
+    },
+    {
+      "id": 21,
+      "duration_seconds": 25,
+      "app_cue": "Type follow-up prompt: 'Put this in memo form to the senior partner'",
+      "say": "Now watch this — I can take that same answer and ask it to convert into a memo for the senior partner. Same research, now it's client-facing work product."
+    },
+    {
+      "id": 22,
+      "duration_seconds": 40,
+      "app_cue": "New prompt: 'Summarize the SEC's guidance regarding climate-related risk disclosures in public company filings, especially Form 10-K'. Scroll to show key disclosure, citations, sources.",
+      "say": "Let's try a second example — SEC guidance on climate-related risk disclosures, specifically Form 10-K. You'll see the key disclosure points, recent developments, and every citation traced back to our source documents, down to the pinpoint cite."
+    },
+    {
+      "id": 23,
+      "duration_seconds": 25,
+      "app_cue": "Follow-up prompt: 'Convert this answer to a blog post for the purpose of generating new clients'",
+      "say": "Same idea — take that research and turn it into a blog post aimed at bringing in new clients."
+    },
+    {
+      "id": 24,
+      "duration_seconds": 15,
+      "app_cue": "Show Chat History back 1 year",
+      "say": "And everything's saved — chat history goes back a full year, so nothing gets lost."
+    },
+    {
+      "id": 25,
+      "duration_seconds": 30,
+      "app_cue": "Recap Expert AI benefits",
+      "say": "The bottom line on Expert AI: natural language, no learning curve. It's a closed system — only pulls from WK trusted content in your subscription, so you're not getting hallucinated case law. Every answer comes with citations and source links. Unlimited prompts, a full year of chat history, and you can convert any answer into a memo, blog post, letter, bullet list, checklist, or comparison chart."
+    },
+    {
+      "id": 26,
+      "duration_seconds": 30,
+      "app_cue": "Go Home, start new search, type 'Golden Parachute' into main search box",
+      "say": "Let's do one more search to show the filtering. I'll search Golden Parachute."
+    },
+    {
+      "id": 27,
+      "duration_seconds": 35,
+      "app_cue": "Demonstrate Filter Panel: Document Types, Governing Acts, Court, Jurisdiction, Issuing Body, Entity & Role. Expand Document Types, show subtypes for Agency Materials, check/uncheck boxes.",
+      "say": "On the left you've got filters — document type, governing act, court, jurisdiction, issuing body, entity and role. Stack as many as you need. Let's expand document types and look at agency materials specifically — you can drill all the way down to subtypes."
+    },
+    {
+      "id": 28,
+      "duration_seconds": 20,
+      "app_cue": "Show responsive design across desktop, tablet, phone",
+      "say": "One last thing — VitalLaw adjusts automatically to whatever device you're on. Desktop, tablet, phone, it just reformats. No separate app to download. You've got access anywhere, anytime."
+    }
+  ]
+}
