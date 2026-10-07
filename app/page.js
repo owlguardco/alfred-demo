@@ -166,6 +166,7 @@ export default function Alfred() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: nextHistory }),
       })
+      if (res.status === 401) { window.location.assign('/login'); return }
       const data = await res.json()
       const reply = data.text || data.error || 'No response.'
       const updatedHistory = [...nextHistory, { role: 'assistant', content: reply }]
