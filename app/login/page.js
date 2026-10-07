@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   async function submit(e) {
     e.preventDefault()
-    if (pin.length < 6 || busy) return
+    if (pin.length < 4 || busy) return
     setBusy(true)
     setError('')
     try {
@@ -46,8 +46,8 @@ export default function LoginPage() {
         />
         <p role="alert" style={{ minHeight: 20, margin: '8px 0', fontSize: 13, color: C.error }}>{error}</p>
         <button
-          type="submit" disabled={pin.length < 6 || busy}
-          style={{ width: '100%', padding: '12px', borderRadius: 8, background: C.accentBg, border: `1px solid ${C.accentBorder}`, color: C.accentText, fontSize: 14, fontWeight: 500, cursor: 'pointer', opacity: pin.length < 6 || busy ? 0.4 : 1 }}
+          type="submit" disabled={pin.length < 4 || busy}
+          style={{ width: '100%', padding: '12px', borderRadius: 8, background: C.accentBg, border: `1px solid ${C.accentBorder}`, color: C.accentText, fontSize: 14, fontWeight: 500, cursor: 'pointer', opacity: pin.length < 4 || busy ? 0.4 : 1 }}
         >
           {busy ? 'Signing in…' : 'Sign in'}
         </button>
